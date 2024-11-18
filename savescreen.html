@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Saver</title>
+    <style>
+/* Estilos generales */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    font-family: Arial, sans-serif;
+}
+
+.savescreen {
+    text-align: center;
+    color: white;
+}
+
+header h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+/* Contenedor para las imágenes de las teclas */
+.key-images {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    outline: 2px solid gray;
+    transition: outline 0.5s infinty;
+}
+
+/* Estilo de las imágenes de las teclas */
+.key {
+    width: auto;
+    height: 100px;
+    object-fit: cover;
+    
+}
+
+/* Efecto de destello (cambia el outline) */
+@keyframes destello {
+    0% {
+        outline-color: gray;
+    }
+    50% {
+        outline-color: white;
+    }
+    100% {
+        outline-color: gray;
+    }
+}
+
+.key:hover {
+    animation: destello 1s infinite;
+}
+
+    </style>
+</head>
+<body>
+    <div class="savescreen">
+        <header>
+            <h1>Presiona cualquier tecla para desbloquear</h1>
+        </header>
+        <div class="key-images">
+            <img src="Tecla L.png" alt="Tecla L" class="key" id="keyL">
+            <img src="Tecla R.png" alt="Tecla R" class="key" id="keyR">
+            <img src="Tecla Intro.png" alt="Tecla Intro" class="key" id="keyIntro">
+            <img src="Tecla ESC.png" alt="Tecla ESC" class="key" id="keyESC">
+        </div>
+    </div>
+    <script >
+
+// Esperamos que cualquier tecla sea presionada para desbloquear
+document.addEventListener('keydown', (event) => {
+    
+    let keydown = event.key
+    
+    let condition = keydown == "ArrowRight" || keydown == "ArrowLeft" || keydown == "Enter" || keydown == "Esc";
+    // Cuando se presiona cualquier tecla, eliminamos el mensaje y el efecto de destello
+    if(condition)
+{
+    document.querySelector('header h1').style.display = 'none';
+    const keys = document.querySelector('.key-images');
+
+    keys.animation = "none";
+    window.location.href = "index.html"
+}
+   
+   
+});
+
+
+    </script>
+</body>
+</html>

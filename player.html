@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor de Ritmos de Piano</title>
+
+
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+
+
+
+        body {
+            font-family: "Poppins", sans-serif;
+           display: flex;
+
+           flex-direction: column;
+           justify-content: flex-end;
+           align-items: flex-end;
+        }
+
+        main{
+            display: flex;
+            flex-direction: column;
+            width: fit-content;
+        }
+
+        #player {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+          
+           
+            margin: 2rem auto;
+        }
+
+
+        button {
+            padding: 1rem;
+            font-size: 3rem;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        button:focus {
+            background-color: #DF7F33;
+            color:black;
+            outline: 2px solid #fff;
+        }
+
+
+
+        @font-face {
+            font-family: 'PPAgrandir-GrandHeavy';
+            src: url('PPAgrandir-GrandHeavy.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'PPMondwest-Regular';
+            src: url('PPMondwest-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }    @font-face {
+            font-family: 'PPPlayground-Medium'; /* También puedes usar un nombre único */
+            src: url('PPPlayground-Medium.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .cursiva{font-family:PPPlayground-Medium;}
+        .bitmap{font-family:PPMondwest-Regular;}
+        .invertida{font-family:PPAgrandir-GrandHeavy;}
+
+
+
+
+
+
+
+        header
+        {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            background-color: #ffffff;
+            /* Fondo blanco */
+            color: rgb(0, 0, 0);
+            padding: 15px;
+            text-align: left;
+            font-size: 24px;
+            box-shadow: #0000004d 20px 20px ;
+           align-items: center;
+            /* Transición suave */
+        }
+
+        
+        #logo {
+            width: auto;
+            height: 200px;
+        }
+
+        #logo:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img id="logo" src="logo-cabezal-responsive-1.png" alt="" onclick="window.location.href='index.html'">
+    
+       
+
+
+
+
+           <h1 class="invertida" style="font-size: 50pt;"><span class="cursiva" style="font-size: 80pt;">Versos</span> del Piano</h1>
+
+
+   
+    </header>
+
+    <main>
+        <div id="player" role="list" aria-label="Lista de ritmos clásicos de piano">
+            <button class="invertida" id="track1" role="listitem" tabindex="0" aria-label="Ritmo 1">Base</button>
+            <button class="invertida" id="track2" role="listitem" tabindex="0" aria-label="Ritmo 2">Clave</button>
+            <button class="bitmap" id="track3" role="listitem" tabindex="0" aria-label="Ritmo 3">Rezongo</button>
+            <button class="cursiva" id="track4" role="listitem" tabindex="0" aria-label="Ritmo 4">Variacion</button>
+            <button class="invertida" id="track5" role="listitem" tabindex="0" aria-label="Ritmo 5">Llamada(Subir)</button>
+            <button class="bitmap" id="track6" role="listitem" tabindex="0" aria-label="Ritmo 6">Permiso</button>
+            <button class="cursiva" id="track7" role="listitem" tabindex="0" aria-label="Ritmo 7">Llamada(Cierre)</button>
+           
+        </div>
+    </main>
+
+    <script>
+        // Ritmos cargados
+        const tracks = [
+            new Audio('ruta_al_ritmo1.mp3'),
+            new Audio('ruta_al_ritmo2.mp3'),
+            new Audio('ruta_al_ritmo3.mp3'),
+            new Audio('ruta_al_ritmo4.mp3'),
+            new Audio('ruta_al_ritmo5.mp3'),
+            new Audio('ruta_al_ritmo6.mp3'),
+            new Audio('ruta_al_ritmo7.mp3'),
+            "salir"
+        ];
+
+        let currentTrack = 0;
+
+        // Función para reproducir o pausar el ritmo
+        function togglePlay() {
+            const track = tracks[currentTrack];
+
+            if (track=="salir"){window.location.href="index.html"}
+
+
+            if (track.paused) {
+                track.play();
+            } else {
+                track.pause();
+            }
+        }
+
+        // Función para cambiar de pista
+        function changeTrack(direction) {
+
+            if(tracks[currentTrack]!="salir"){
+
+           
+            tracks[currentTrack].pause();
+            tracks[currentTrack].currentTime = 0; // Reinicia el tiempo del ritmo actual
+ }
+            if (direction === 'next') {
+                currentTrack = (currentTrack + 1) % tracks.length;
+            } else if (direction === 'previous') {
+                currentTrack = (currentTrack - 1 + tracks.length) % tracks.length;
+            }
+
+            // Cambia el foco al botón de la pista actual
+            document.querySelectorAll('#player button')[currentTrack].focus();
+        }
+
+        // Detecta las teclas presionadas
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight') {
+                changeTrack('next');
+            } else if (event.key === 'ArrowLeft') {
+                changeTrack('previous');
+            } else if (event.key === 'Enter') {
+                togglePlay();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego tipo Guitar Hero con Animación de Estrella</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <style>
+        .blur-overlay {
+            position: fixed;
+            /* Posiciona el elemento de forma fija en la ventana */
+            top: 0;
+            /* Coloca el elemento en la parte superior */
+            left: 0;
+            /* Coloca el elemento en la parte izquierda */
+            width: 100vw;
+            /* Ancho completo de la ventana */
+            height: 100vh;
+            /* Altura completa de la ventana */
+            background-color: rgba(255, 255, 255, 0.5);
+            /* Color de fondo blanco con opacidad */
+            backdrop-filter: blur(10px);
+            /* Aplica el desenfoque */
+            z-index: 50;
+            /* Asegura que el elemento esté por encima de otros */
+
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background-color: #f0f0f0;
+            /* Fondo claro */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            transition: background-color 0.5s, color 0.5s;
+            /* Transición suave */
+        }
+
+
+
+
+
+
+
+
+#score .dark
+{
+    color: white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .linea {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: black;
+            /* Línea negra */
+            transition: background-color 0.5s
+        }
+
+        .zona-hit {
+            position: absolute;
+            top: 50%;
+            left: 30%;
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+            background-color: rgb(249, 184, 231);
+            transform: translate(-50%, -50%);
+            visibility: visible;
+
+        }
+
+        #main-star {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 50%;
+            left: 30%;
+            /* Colocamos en la misma posición que la zona de hit */
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .esfera,
+        .snare {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 100%;
+        }
+
+
+        .esfera {
+            width: 60px;
+            height: 60px;
+            background-color: black;
+            /* Esfera negra */
+            transition: background-color 0.5s;
+            border-radius: 100%;
+        }
+
+        .diamante {
+            top: 43%;
+            position: absolute;
+            width: 40px;
+            /* Ancho del rombo */
+            height: 40px;
+            /* Altura del rombo */
+            background-color: #C030B4;
+            /* Color del rombo */
+            transform: rotate(45deg);
+            /* Rotar para formar un rombo */
+            margin: 50px;
+            /* Espaciado alrededor del rombo, ajustable */
+        }
+
+        .snare {
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 60px solid #df7f33;
+        }
+
+
+        .ssnare {
+            position: absolute;
+            top: 48%;
+
+            left: 100%;
+
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            /* Half of the width (60px total width) */
+            border-right: 30px solid transparent;
+            border-top: 60px solid #3e97e1;
+            /* Main triangle color for the border */
+
+        }
+
+
+        .drumhead {
+            position: absolute;
+            top: 50%;
+            left: 30%;
+            /* Mantenlo alineado con la estrella */
+            width: 250px;
+            /* Ajusta el tamaño según sea necesario */
+            height: 250px;
+            /* Debe ser igual que el ancho para ser circular */
+            background-color: white;
+            /* Color blanco */
+            border-radius: 100%;
+            /* Hace que sea un círculo */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            /* Sombra para el efecto de profundidad */
+            transform: translate(-50%, -50%);
+            /* Centrar el círculo sobre la estrella */
+            z-index: -10;
+            /* Asegúrate de que esté detrás de la estrella, si es necesario */
+        }
+
+
+
+
+        #explosion-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            z-index: -5;
+        }
+
+        .sphere {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: violet;
+            border-radius: 50%;
+            opacity: 1;
+            animation: fly-and-fade 1s ease-out forwards;
+        }
+
+        @keyframes fly-and-fade {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--x-move), var(--y-move)) scale(3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes impactEffect {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+
+
+        /* Estilos para la animación de impacto */
+        .impact-star {
+            position: absolute;
+            top: 45%;
+            left: 26%;
+            /* Colocamos en la misma posición que la zona de hit */
+            z-index: 20;
+            width: 100px;
+            height: 100px;
+            animation: impactEffect 1s forwards;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            background-color: #ffffff;
+            /* Fondo blanco */
+            color: rgb(0, 0, 0);
+            padding: 15px;
+            text-align: left;
+            font-size: 24px;
+            box-shadow: #0000004d 20px;
+            transition: background-color 0.5s, color 0.5s, box-shadow 0.5s;
+            /* Transición suave */
+
+            position: absolute;
+        }
+
+
+
+
+        #score-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        #score {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+
+        #speed-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #speed {
+            margin-top: 5px;
+            width: 300px;
+        }
+
+        .slider-label {
+            font-size: 16px;
+            color: #333;
+            /* Texto oscuro */
+        }
+
+
+
+
+
+        #logo {
+            width: 300px;
+            height: auto;
+        }
+
+        .scoreBox {
+            border: 1px solid black;
+            /* Borde negro */
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            text-justify: center;
+            box-shadow: #000000 5px 5px;
+        }
+
+
+
+        #patronSelect {
+            background-color: rgb(255, 255, 255);
+            /* Fondo negro */
+            color: black;
+            /* Texto blanco */
+            font-family: 'Poppins', sans-serif;
+            /* Fuente Poppins */
+            font-size: 20pt;
+            /* Tamaño de fuente */
+            padding: 10px;
+            /* Espaciado interno */
+
+            /* Borde blanco */
+            border-radius: 5px;
+            /* Bordes redondeados */
+            outline: none;
+            /* Quitar borde azul de enfoque */
+            appearance: none;
+            /* Elimina el estilo predeterminado */
+            text-align: center;
+            box-shadow: #000000 5px 5px;
+            transition: background-color 0.5s, color 0.5s, box-shadow 0.5s;
+        }
+
+
+
+        .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas, una para los elementos y otra para las explicaciones */
+    grid-template-rows: repeat(4, 1fr); /* Asegura que todas las filas tengan el mismo tamaño */
+    gap: 20px; /* Espacio entre columnas y filas */
+    padding: 20px;
+    height: 80vh;
+    width: 40vw;
+    align-items: stretch; /* Estira los elementos para que ocupen la misma altura en cada fila */
+    justify-items: center; /* Centra los elementos en cada celda de forma horizontal */
+    align-items: center; /* Centra los elementos en cada celda de forma vertical */
+}
+
+.elementos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.item {
+    width: 100px;
+    height: 100px; /* Fija la altura de los elementos */
+    background-color: #3498db;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    flex-shrink: 0; /* Evita que los elementos se encojan */
+}
+
+.explicaciones {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly; /* Distribuir las explicaciones uniformemente */
+    gap: 10px;
+}
+
+.explicaciones p {
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: justify;
+    height: 100px; /* Fija la altura de las explicaciones para que coincidan con los elementos */
+    overflow: auto; /* Permite que el texto se desplace si es demasiado largo */
+}
+
+
+
+
+        
+.esferaD {
+            width: 60px;
+            height: 60px;
+            background-color: black;
+            /* Esfera negra */
+            transition: background-color 0.5s;
+            border-radius: 100%;
+        }
+
+        .diamanteD {
+         
+            width: 40px;
+            /* Ancho del rombo */
+            height: 40px;
+            /* Altura del rombo */
+            background-color: #C030B4;
+            /* Color del rombo */
+            transform: rotate(45deg);
+            /* Rotar para formar un rombo */
+            margin: 50px;
+            /* Espaciado alrededor del rombo, ajustable */
+        }
+
+        .snareD{
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 60px solid #DF7F33;
+        }
+
+
+        .ssnareD{
+         
+
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            /* Half of the width (60px total width) */
+            border-right: 30px solid transparent;
+            border-top: 60px solid #3e97e1;
+            /* Main triangle color for the border */
+
+        }
+
+
+
+
+
+
+
+
+        body.dark #patronSelect {
+            background-color: #3a3a3a;
+            /* Fondo negro */
+            color: rgb(255, 255, 255);
+            /* Texto blanco */
+
+            border: 1px solid rgb(255, 255, 255);
+            /* Borde blanco */
+
+
+
+            box-shadow: #ffffff 5px 5px;
+        }
+
+
+        /* Tema oscuro */
+        body.dark {
+            background-color: #3a3a3a;
+            /* Fondo oscuro */
+        }
+
+        body.dark header {
+            background-color: #5e5e5e;
+            /* Fondo gris oscuro para el encabezado */
+            color: #ffffff;
+            /* Texto blanco */
+            box-shadow: #ffffff4d 20px;
+            /* Sombra blanca */
+        }
+
+        body.dark .linea {
+            background-color: white;
+            /* Línea blanca */
+        }
+
+        body.dark .zona-hit {
+            background-color: #DF7F33;
+            /* Color de fondo violeta */
+        }
+
+        body.dark .esfera {
+            background-color: white;
+            /* Esfera blanca */
+        }
+
+        body.dark .drumhead {
+            background-color: #5e5e5e;
+            /* Fondo gris oscuro */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            /* Sombra blanca */
+        }
+
+        body.dark .scoreBox {
+            border: 5px solid #ffffff;
+            /* Borde blanco */
+        }
+
+        body.dark .slider-label {
+            color: #ffffff;
+            /* Texto blanco para la etiqueta del slider */
+        }
+
+        /* También puedes agregar más estilos personalizados aquí para otros elementos */
+
+
+
+
+
+
+
+        .videoCard {
+            visibility: hidden;
+            text-align: center;
+            position: absolute;
+            right: 5%;
+            background-color: white;
+            /* Fondo blanco para la tarjeta */
+            border-radius: 8px;
+            /* Bordes redondeados */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* Sombra sutil */
+            overflow: hidden;
+            /* Evita que el contenido se salga de la tarjeta */
+            width: 50 vw;
+            /* Ancho fijo de la tarjeta */
+            height: 95vh;
+            z-index: 52;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+
+
+        #video-card-content {
+            margin: 20px;
+            width: 50%;
+            /* Espaciado interno para el contenido */
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .card {
+            text-align: center;
+            position: absolute;
+            left: 25%;
+            background-color: white;
+            /* Fondo blanco para la tarjeta */
+            border-radius: 8px;
+            /* Bordes redondeados */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            /* Sombra sutil */
+            overflow: hidden;
+            /* Evita que el contenido se salga de la tarjeta */
+            width: 50vw;
+            /* Ancho fijo de la tarjeta */
+            height: 95vh;
+            z-index: 52;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-image {
+            width: 100%;
+            /* Imagen ocupa todo el ancho de la tarjeta */
+            height: auto;
+            /* Mantiene la proporción de la imagen */
+        }
+
+        #card-content {
+            padding: 16px;
+            /* Espaciado interno para el contenido */
+        }
+
+        .card-footer {
+            display: flex;
+            /* Flex para alinear los elementos en fila */
+            justify-content: space-around;
+            /* Espacio equidistante entre los botones */
+            padding: 10px;
+            /* Espaciado interno para el pie de la tarjeta */
+            background-color: #f9f9f9;
+            /* Fondo ligero para el pie */
+        }
+
+        .card-footer label {
+            cursor: pointer;
+            /* Cambia el cursor al pasar sobre el label */
+        }
+
+        .card-footer input[type="radio"] {
+            margin-right: 5px;
+            /* Espacio entre el radio button y el texto */
+        }
+
+
+
+
+
+        button {
+            padding: 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        button:focus {
+            background-color: #DF7F33;
+            color: black;
+            outline: 2px solid #fff;
+        }
+
+
+
+
+
+
+
+        #player {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            height: 85vh;
+            justify-content: flex-start;
+            align-items: center;
+            
+        }
+
+
+        button {
+            padding: 1rem;
+            font-size: 1rem;
+            width: 100%;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        button:focus {
+            background-color: #DF7F33;
+            font-size: 2rem;
+            color: black;
+            outline: 2px solid #fff;
+        }
+
+
+
+        @font-face {
+            font-family: 'PPAgrandir-GrandHeavy';
+            src: url('PPAgrandir-GrandHeavy.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'PPMondwest-Regular';
+            src: url('PPMondwest-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'PPPlayground-Medium';
+            /* También puedes usar un nombre único */
+            src: url('PPPlayground-Medium.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .cursiva {
+            font-family: PPPlayground-Medium;
+        }
+
+        .bitmap {
+            font-family: PPMondwest-Regular;
+        }
+
+        .invertida {
+            font-family: PPAgrandir-GrandHeavy;
+        }
+
+
+
+
+
+
+        main {
+            display: flex;
+            flex-direction: column;
+            width: inherit;
+        }
+
+
+
+
+
+
+
+        #scoreBOX {
+            position: absolute;
+            top: 60%;
+            left: 45%;
+            background-color: #FFFFFF;
+
+            transition: background-color 0.5s;
+        }
+
+
+
+        .PatternText {
+            font-size: 50px;
+        }
+    </style>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body>
+
+    <h1 id="Pattern" class="PatternText"></h1>
+
+
+
+
+    <div class="card">
+        <img id="img-card" class="card-image">
+        <div id="card-content">
+            <h3 id="titulo-card">BIENVENIDXS!</h3>
+            <p id="texto-card">Este es un juego para aprender a disfrutar el ritmo de la musica desde el tacto y el
+                ritmo!.</p>
+        </div>
+        <fieldset class="card-footer" onchange="updateCard()">
+
+            <input type="radio" id="slide-1" name="card" value="1">
+            <input type="radio" id="slide-2" name="card" value="2">
+            <input type="radio" id="slide-3" name="card" value="3">
+            <input type="radio" id="slide-4" name="card" value="4">
+            <input type="radio" id="slide-5" name="card" value="5">
+
+        </fieldset>
+
+    </div>
+
+
+    <div class="videoCard">
+        <video id="video-card" src="" autoplay loop style="width: 50vw; "></video>
+        <div id="video-card-content">
+            <h3 id="video-titulo-card">YA ESTAMOS POR ARRANCAR!</h3>
+            <p id="video-texto-card" class="invertida" style="font-size: 1rem;">PRESIONA ARRIBA O ABAJO PARA SELECCIONAR EL RITMO!</p>
+
+         
+        </div>
+        <img id="tutorial-img" src="" alt="" style="width: 45vw; padding:2vw">
+    </div>
+    <div class="blur-overlay"></div>
+
+    <header>
+        <img id="logo" src="logo-cabezal-responsive-1.png" alt="">
+
+
+        <div style="display: flex; flex-direction: row; align-items: center; gap: 
+       10px;">
+            <p>Ritmo:</p>
+            <select id="patronSelect">
+                <option value="BASE">BASE</option>
+                <option value="CLAVE">CLAVE</option>
+                <option value="RESONGO">RESONGO</option>
+                
+            </select>
+        </div>
+
+
+
+
+
+        <div id="score-container">
+
+
+
+
+
+
+            <h1>Velocidad</h1>
+            <div class="scoreBox">
+                <h2 id="bpmDisplay"></h2>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </header>
+
+    <div class="scoreBox" id="scoreBOX">
+        <div id="score">0</div>
+    </div>
+
+
+
+
+    <div class="linea"></div>
+    <div id="noteContainer" style="z-index: 1;"></div>
+    <div class="drumhead"></div>
+
+    <div class="zona-hit">
+
+    </div>
+    <img id="main-star" src="Star.svg" alt="Main Star">
+    <div id="explosion-container"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="soundscript.js"></script>
+
+
+    <script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+const urlParams = new URLSearchParams(window.location.search);
+const audioguia = urlParams.get("audioguia");
+
+
+
+        const patrones = {
+
+            BASE: ['D', 'X',  'T', 'D',"X",  'T', 'E', 'T', 'D',"X" ],
+            CLAVE: ['Q', 'Q', 'Q',"X", 'Q', 'Q', 'E', 'T'],
+            RESONGO: [ 'E', 'T', 'T','X','T', 'X',  'E', 'T', 'T', 'E', 'T', 'T', 'D'],
+        
+        };
+
+
+
+
+
+
+
+
+        function explotar() {
+            const explosionContainer = document.getElementById("explosion-container");
+
+            for (let i = 0; i < (8 + Math.round(score / 10)); i++) {
+                const sphere = document.createElement("div");
+                sphere.classList.add("sphere");
+
+                // Posicionar en el 48% de la altura y 30% del ancho de la pantalla
+                sphere.style.top = "30%";
+                sphere.style.left = "30%";
+
+                // Generar movimiento aleatorio para la animación
+                const angle = Math.random() * 2 * Math.PI; // ángulo aleatorio en radianes
+                const distance = Math.random() * 100 + 50; // distancia aleatoria entre 50 y 150 px
+                const xMove = Math.cos(angle) * distance + "px";
+                const yMove = Math.sin(angle) * distance + "px";
+
+                // Usar variables CSS para definir el movimiento
+                sphere.style.setProperty("--x-move", xMove);
+                sphere.style.setProperty("--y-move", yMove);
+
+                explosionContainer.appendChild(sphere);
+
+                // Remover la esfera después de la animación
+                setTimeout(() => sphere.remove(), 1000);
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        let theme = 0;
+        let tupapa = document.getElementById("noteContainer")
+        let currentPattern = 0, repetitions = 0, score = 0;
+        let ritmo = 1500; // Velocidad inicial
+
+        // Obtener el slider y agregar un evento para actualizar la velocidad
+
+
+        function updateCard() {
+            let card = document.getElementsByClassName("card")[0];
+            let container = document.getElementById("card-content");
+            let valor = document.querySelector('input[name="card"]:checked').value;
+            let imagen = document.getElementById("img-card");
+            let titulo = document.getElementById("titulo-card");
+            let texto = document.getElementById("texto-card");
+
+            switch (valor) {
+                case "1":
+                    titulo.innerText = "BIENVENIDXS!";
+                    texto.innerText = "Este es un juego para aprender a disfrutar del candombe de la musica desde el tacto, la vision y el ritmo!.";
+
+                    break;
+                case "2":
+                    titulo.innerText = "Estrella y Círculo";
+                    texto.innerText = "Este es el piano o tambor candombe. Cada vez que le pegás, el juego lo detecta y te deja seguir tocando los ritmos.";
+
+                    break;
+                case "3":
+                    titulo.innerText = "Velocidad y Ritmos";
+                    texto.innerText = `Cada Ritmo representa que notas tendras que ir reproduciendo en tu tambor! mientras que Velocidad representa que tan rapido tendras que tocarlas`;
+
+                    break;
+
+                case "4":
+                titulo.remove(); texto.remove(); imagen.remove();
+                container.innerHTML+=` <div>
+        <div class="grid-container">
+            
+                <div class="snareD"></div>
+                <p>PALO:<br> Golpea con el palo en el borde de la lonja</p>
+                
+                <div class="esferaD"></div>
+                <p>MANO:<br> Golpea con la mano el borde de la lonja</p>
+
+                <div class="ssnareD"></div>
+                <p>CHA:<br> Golpea con el palo la madera (En el costado del tambor)</p>
+               
+                <div class="diamanteD"></div>
+                <p>MANO PALO:<br> Golpea en simultaneo con ambas manos en el centro de la lonja</p>
+
+            
+        </div>
+    </div>`
+
+                    break;
+
+
+                default:
+                
+
+                    container.innerHTML="";
+
+                    card.style.width = "33vw";
+                    card.style.left = "5vw";
+
+                    container.innerHTML += `  <main>
+        <div id="player" role="list" aria-label="Lista de ritmos clásicos de piano">
+            <button class="invertida" id="track1" role="listitem" tabindex="0" aria-label="Ritmo 1">Base</button>
+            <button class="invertida" id="track2" role="listitem" tabindex="0" aria-label="Ritmo 2">Clave</button>
+            <button class="invertida" id="track3" role="listitem" tabindex="0" aria-label="Ritmo 3">Rezongo</button>
+            
+        
+
+              <h1>BPMS</h1>
+           <div class="scoreBox">
+                <h2 id="bpmDisplay-card">${msToBpm(ritmo)}</h2>
+           </div>
+        </div>
+
+
+
+       
+    </main>
+
+
+
+
+
+`;
+
+
+                    break;
+
+            }
+        }
+
+
+        function flashColor(element, color) {
+    const originalColor = element.style.color; // Guardar el color original
+    element.style.color = color; // Cambiar al color deseado
+
+    // Después de 300 ms, volver al color original
+    setTimeout(() => {
+        element.style.color = originalColor;
+    }, 300);
+}
+        function msToBpm(ms) {
+            if (ms <= 0) {
+                throw new Error("El valor debe ser mayor que cero");
+            }
+            return Math.round(60000 / ms);
+        }
+        function crearElemento(tipo) {
+            const elemento = document.createElement('div');
+
+            elemento.className = tipo;
+            document.getElementById("noteContainer").appendChild(elemento);
+            moverElemento(elemento);
+        }
+
+        let hitsArray = [];
+
+        function verificarHit() {
+            const elementos = document.querySelectorAll('.esfera, .snare, .ssnare,.diamante');
+            let hitDetected = false;
+
+            elementos.forEach(elemento => {
+                const rect = elemento.getBoundingClientRect();
+                const zonaHit = document.querySelector('.zona-hit').getBoundingClientRect();
+
+                const enZonaHit = (
+                    rect.right >= zonaHit.left &&
+                    rect.left <= zonaHit.right
+                );
+
+                if (enZonaHit) {
+
+                    // Verifica si el elemento aún existe en el DOM antes de intentar eliminarlo
+                    if (document.body.contains(elemento)) {
+                        elemento.remove();
+                    }
+                    hitDetected = true;
+                    score++;
+                    explotar()
+                    let scoretext = document.getElementById('score')
+                    scoretext.innerText = `${score}`;
+                    flashColor(scoretext,"#df7f33");
+                    hitsArray.push(1);
+
+                    if (hitsArray.length > 10) {
+                        hitsArray.shift();
+                    }
+                }
+            });
+
+            if (hitDetected) {
+                verificarRendimiento();
+            } else {
+                hitsArray.push(0);
+                if (hitsArray.length > 10) {
+                    hitsArray.shift();
+                }
+
+            }
+
+        }
+
+        function verificarRendimiento() {
+            const totalHits = hitsArray.length;
+
+            // Verificar si hay al menos 20 hits
+            if (totalHits === 10) {
+                const correctHits = hitsArray.filter(numero => numero === 1).length;
+                if (correctHits >= 5) {
+
+                    if (theme == 0) { toggleTheme() }
+                } else {
+                    if (theme == 1) { toggleTheme() }
+                }
+            }
+        }
+        function moverElemento(elemento) {
+            let position = window.innerWidth;
+            const targetPosition = window.innerWidth * 0.2; // Calcula el 20% de la ventana
+            const animacion = setInterval(() => {
+                if (position < -70 & document.body.contains(elemento)) {
+                    clearInterval(animacion);
+                    tupapa.removeChild(elemento); // Eliminar al llegar al borde
+                } else {
+                    elemento.style.left = (position -= 10) + 'px';
+                }
+
+                // Inicia el desvanecimiento cuando llega a 30% de la pantalla
+                if (position <= targetPosition && elemento.style.opacity !== "0" && document.body.contains(elemento)) {
+                    elemento.style.transition = "opacity 1s ease";
+                    elemento.style.opacity = 0; // Comienza a desvanecerse
+                    hitsArray.push(0)
+
+                    // Mantener el tamaño del arreglo en 20
+                    if (hitsArray.length > 10) {
+                        hitsArray.shift(); // Eliminar el primer elemento
+                    }
+                    verificarRendimiento();
+                    setTimeout(() => {
+                        if (document.body.contains(elemento)) {
+                            clearInterval(animacion); // Detiene la animación después de desvanecerse
+                            tupapa.removeChild(elemento); // Eliminar después de desvanecer
+                        }
+
+                    }, 300);
+                }
+            }, 20);
+        }
+        let isRunning = true; // Variable de control
+
+function crearPatron() {
+    if (!isRunning) return; // Detener si isRunning es false
+
+    // Obtener el patrón seleccionado
+    const patronSeleccionado = document.getElementById("patronSelect").value;
+
+    // Si no hay un patrón seleccionado o el patrón no existe en el objeto `patrones`, detener la función
+    if (!patronSeleccionado || !patrones[patronSeleccionado]) return;
+
+    const patron = patrones[patronSeleccionado]; // Obtener el patrón basado en la selección
+    let index = 0; // Control de índice para las notas
+    let repetitions = 0; // Control de repeticiones
+
+    function procesarNota() {
+        if (!isRunning) return; // Detener si isRunning es false
+
+        // Si hemos procesado todas las notas, gestionar las repeticiones
+        if (index >= patron.length) {
+            repetitions++;
+
+            // Si se ha alcanzado el límite de repeticiones, detener el bucle
+            if (repetitions >= 3) {
+                repetitions = 0; // Reiniciar repeticiones
+                return; // Salir de la función
+            }
+
+            // Esperar antes de reiniciar el patrón
+            setTimeout(() => {
+                if (isRunning) crearPatron(); // Verificar isRunning antes de reiniciar
+            }, 500);
+            return; // Salir de la función
+        }
+
+        // Obtener el símbolo actual del patrón
+        const simbolo = patron[index++];
+
+        // Crear el elemento correspondiente según el símbolo
+        if (simbolo === 'E') crearElemento('esfera');
+        if (simbolo === 'T') crearElemento('snare');
+        if (simbolo === 'D') crearElemento('diamante');
+        if (simbolo === 'Q') crearElemento('ssnare');
+        
+        if (simbolo === 'X') {
+            // Hacer una pausa antes de continuar con el siguiente símbolo
+            setTimeout(() => {
+                procesarNota(); // Llamar a procesarNota después de la pausa
+            }, ritmo/5); // Aquí puedes modificar el tiempo que quieras que dure la pausa
+            return; // No continuar el proceso, ya que estamos esperando
+        }
+
+        // Determinar el delay para el siguiente símbolo
+        const delay = ritmo / 3;
+        setTimeout(procesarNota, delay); // Llamar a procesarNota con el delay calculado
+    }
+
+    procesarNota(); // Iniciar el procesamiento de notas
+}
+
+        // Función para detener el patrón
+        function detenerPatron() {
+            isRunning = false;
+        }
+        let audioContext, analyser, dataArray;
+        let animationFrameId; // ID para requestAnimationFrame
+
+        async function startAudio() {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+            if (audioContext.state === 'suspended') {
+                await audioContext.resume();
+            }
+
+            const source = audioContext.createMediaStreamSource(stream);
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 2048;
+
+            source.connect(analyser);
+            dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+            analyzeAudio();
+        }
+
+        function analyzeAudio() {
+            analyser.getByteFrequencyData(dataArray);
+
+            if (detectPercussion(dataArray)) {
+                verificarHit(); // Verificar hit al detectar percusión
+                impacto();
+            }
+
+            animationFrameId = requestAnimationFrame(analyzeAudio);
+        }
+
+        function stopAudioAnalysis() {
+            // Detiene el análisis de audio
+            cancelAnimationFrame(animationFrameId);
+
+            // Libera recursos de audio
+            if (audioContext && audioContext.state !== 'closed') {
+                audioContext.close();
+            }
+        }
+
+        let previousMaxFrequency = 0;
+
+        function detectPercussion(frequencies) {
+            const threshold = 80;
+            const minimumPeakChange = 20;
+            let currentMaxFrequency = Math.max(...frequencies);
+
+            if (currentMaxFrequency > threshold && (currentMaxFrequency - previousMaxFrequency > minimumPeakChange)) {
+                previousMaxFrequency = currentMaxFrequency;
+                return true;
+            }
+
+            previousMaxFrequency = currentMaxFrequency;
+            return false;
+        }
+
+        function impacto() {
+            const star = document.createElement('img');
+            star.src = theme == 0 ? 'Star.svg' : "Star dark.svg"; // Ruta de la imagen de la estrella
+            star.classList.add('impact-star');
+            document.body.appendChild(star);
+            star.addEventListener('animationend', () => {
+                document.body.removeChild(star); // Eliminar la estrella después de la animación
+            });
+        }
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            document.getElementById("main-star").src = theme === 0 ? "Star dark.svg" : "Star.svg";
+            document.getElementById("logo").src = theme === 0 ? "logo-cabezal-responsive-1 - copia.png" : "logo-cabezal-responsive-1.png";
+            theme = theme === 0 ? 1 : 0;
+        }
+
+        addEventListener("DOMContentLoaded", () => {
+
+        })
+
+        function Start() {
+            document.getElementsByClassName("card")[0].remove();
+            document.getElementsByClassName("blur-overlay")[0].hidden = true;
+            document.getElementsByClassName("videoCard")[0].remove();
+
+            setTimeout(() => { }, 1000);
+
+
+
+            crearPatron();
+
+        }
+
+        startAudio();
+
+
+
+
+        let currentTrack = 0;
+
+
+
+let videos = 
+[
+        {
+            titulo: "Base",
+            texto: "DIFICULTAD: Media",
+            src: "Videos/BASE - Sample.mp4",
+             img: "Tutoriales/BASE.png"
+        },
+
+        {
+            titulo: "Clave",
+            texto: "DIFICULTAD: Fácil",
+            src: "Videos/Clave - Sample.mp4",
+            img: "Tutoriales/CLAVE.png"
+        },
+
+        {
+            titulo: "Resongo",
+            texto: "DIFICULTAD: Difícil",
+            src: "Videos/Resongo - Sample.mp4",
+            img: "Tutoriales/RESONGO.png"
+        },
+
+  
+      
+
+
+]
+
+
+
+
+        // Función para cambiar de pista
+        function changeTrack(direction) {
+
+
+            if (direction === 'next') {
+                currentTrack = (currentTrack + 1) % Object.values(patrones).length;
+            } else if (direction === 'previous') {
+                currentTrack = (currentTrack - 1 + Object.values(patrones).length) % Object.values(patrones).length;
+            }
+
+            // Cambia el foco al botón de la pista actual
+            if (cardEXISTS) {
+                document.querySelectorAll('#player button')[currentTrack].focus();
+
+                let video = document.querySelector("#video-card")
+
+               
+                let vCardTitle = document.querySelector("#video-titulo-card");
+                let vCardText = document.querySelector("#video-texto-card");
+                let vCardImg = document.querySelector("#tutorial-img");
+                vCardTitle.innerText = videos[currentTrack].titulo;
+                vCardText.innerText = videos[currentTrack].texto;
+ video.src = videos[currentTrack].src;
+ vCardImg.src = videos[currentTrack].img
+
+
+            }
+            document.querySelector(`#patronSelect option:nth-child(${currentTrack + 1})`).selected = true;
+        }
+
+
+
+
+        let cardEXISTS;
+        var currentslide = 1;
+        document.querySelector("#slide-1").checked = true;
+
+        document.addEventListener('keydown', (event) => {
+            let id = "#slide"
+            console.log(event.key)
+
+
+
+
+            if (event.key === 'Escape') {
+
+
+                setTimeout(()=>{document.getElementsByClassName("blur-overlay")[0].hidden = false;},300);
+
+
+                if (confirm("¿Quieres salir del juego?")) {
+                    
+                    window.location.href = "index.html"
+                }else{
+            
+                  
+                }
+            } else {
+                cardEXISTS = document.getElementsByClassName("card")[0] != null;
+
+
+
+
+
+                if (cardEXISTS) {
+
+
+
+
+
+
+
+
+                    if (event.key === 'ArrowRight') {
+                        if (currentslide < 5) {
+                            currentslide++;
+                            document.querySelector(`#slide-${currentslide}`).checked = true;
+                            updateCard();
+
+
+                        }
+
+                    }
+
+
+                    if (event.key === 'ArrowLeft') {
+                        if (1 < currentslide && currentslide < 5) {
+                            currentslide++;
+                            document.querySelector(`#slide-${currentslide}`).checked = true;
+                            updateCard();
+
+
+
+
+                        }
+
+                    }
+
+                    if (currentslide == 5) {
+                        cardVideo = document.getElementsByClassName("videoCard")[0].style.visibility = "visible";
+
+                        
+                        
+                        
+
+
+                        if (event.key === 'ArrowRight') {
+
+
+                            ritmo -= 10;
+                            document.getElementById("bpmDisplay-card").innerText = msToBpm(ritmo);
+
+                        }
+
+                        if (event.key === 'ArrowLeft') {
+
+                            ritmo += 10;
+                            document.getElementById("bpmDisplay-card").innerText = msToBpm(ritmo);
+
+                        }
+
+                        if (event.key === 'Enter') {
+                            Start();
+
+
+                        }
+
+                    }
+
+
+
+
+
+
+
+
+
+
+
+                } else {
+
+
+
+
+
+
+
+
+
+
+
+                }
+
+
+
+                if (event.key === 'ArrowUp') {
+
+                    changeTrack("previous")
+
+
+                }
+
+
+                if (event.key === 'ArrowDown') {
+
+                    changeTrack("next")
+
+
+                }
+
+                if (event.key === 'ArrowRight') {
+
+
+                    ritmo -= 10;
+                    document.getElementById("bpmDisplay").innerText = msToBpm(ritmo);
+
+                }
+
+                if (event.key === 'ArrowLeft') {
+
+                    ritmo += 10;
+                    document.getElementById("bpmDisplay").innerText = msToBpm(ritmo);
+
+                }
+
+
+
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Museo del Carnaval - Página Principal</title>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        video {
+            position: relative;
+
+            width: 25vw;
+
+
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16pt;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+
+        }
+
+        header {
+            background-color: #004B87;
+            /* Color de fondo similar al del museo */
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow-x: clip;
+
+            height:10vh;
+        }
+
+        header .logo h1 {
+            margin: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFD700;
+            /* Color dorado al pasar el mouse */
+        }
+
+        main {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 50vw;
+            overflow: hidden;
+
+        }
+
+        header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            background-color: #ffffff;
+            /* Fondo blanco */
+            color: rgb(0, 0, 0);
+            padding: 15px;
+            text-align: left;
+            font-size: 24px;
+            box-shadow: #0000004d -1px 4px;
+            align-items: center;
+            /* Transición suave */
+        }
+
+        .info {
+            margin-top: 20px;
+            box-shadow: #333 20px;
+            width: 50vw;
+
+            display: flex;
+            justify-content: center;
+
+        }
+
+        #logo{
+            height: 10vh;
+        }
+
+        .hero {
+            margin-top: 20px;
+            box-shadow: #333 20px;
+            width: 50vw;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+
+            width: 100%;
+        }
+
+        @font-face {
+            font-family: 'PPAgrandir-GrandHeavy';
+            src: url('PPAgrandir-GrandHeavy.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'PPMondwest-Regular';
+            src: url('PPMondwest-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'PPPlayground-Medium';
+            /* También puedes usar un nombre único */
+            src: url('PPPlayground-Medium.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+
+        .poppins-regular {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .cursiva {
+            font-family: PPPlayground-Medium;
+        }
+
+        .bitmap {
+            font-family: PPMondwest-Regular;
+        }
+
+        .invertida {
+            font-family: PPAgrandir-GrandHeavy;
+        }
+
+
+
+        button {
+            padding: 1rem;
+            font-size: 5rem;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        button:focus {
+            background-color: #DF7F33;
+            color: black;
+            outline: 2px solid #fff;
+        }
+
+
+        .row-teclas {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            width: 30vw;
+
+        }
+
+
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            height: 80vh;
+            width: 100vw;
+        }
+
+
+
+        .key-images {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+
+
+        }
+
+        /* Estilo de las imágenes de las teclas */
+        .key {
+            width: auto;
+            height: 100px;
+            object-fit: cover;
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .modal {
+    position: fixed; /* Fija la ventana en el centro de la pantalla */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden; /* Ocultamos la ventana emergente por defecto */
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease-in-out; /* Suaviza la transición */
+
+    z-index: 250;
+}
+
+.modal-content {
+    background-color: #fff; /* Fondo blanco para el contenido */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    text-align: center;
+    max-width: 80%;
+    width: 40vw;
+
+}
+
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <img id="logo" src="logo-cabezal-responsive-1.png" alt="" onclick="window.location.href='index.html'">
+
+
+
+
+
+
+        <h1 class="invertida" style="font-size: 40pt; margin-right: 25px;"><span class="cursiva"
+                style="font-size: 60pt;">Jugando</span> con tambores</h1>
+
+
+
+    </header>
+
+    <div class="row">
+
+        <main>
+
+
+
+            <section class="hero">
+              
+                <p style=" white-space: pre-wrap;  word-wrap: break-word; text-align: center; ">Este es un juego interactivo para reproducir
+                    ritmos del Piano. Para interactuar presiona las teclas : Flecha izquierda, derecha, escape y enter!
+
+                    Presiona enter para comenzar! 
+                </p>
+                <div class="key-images">
+                    <img src="Tecla L.png" alt="Tecla L" class="key" id="keyL">
+                    <img src="Tecla R.png" alt="Tecla R" class="key" id="keyR">
+                    <img src="Tecla Intro.png" alt="Tecla Intro" class="key" id="keyIntro">
+                    <img src="Tecla ESC.png" alt="Tecla ESC" class="key" id="keyESC">
+                </div>
+                <section class="info">
+                    <button class="invertida" id="jugar" role="listitem" tabindex="0">Jugar</button>
+                </section>
+            </section>
+
+
+
+
+
+<!-- Ventana emergente -->
+<div id="modal" class="modal" style="visibility: hidden; opacity: 0; transition: visibility 0s, opacity 0.5s;">
+    <div class="modal-content">
+        <h2 class="invertida">¿Querés jugar en el modo audio asistido?</h2>
+        <p>
+            Este modo esta pensado para aquellas personas que tengan dificultad para leer, baja o nula visibilidad o bien quien quiera una dificultad menor!
+        </p>
+        <div class="options">
+            <button id="si" class="invertida" onfocus="selected='si'; ">Bueno dale!</button>
+            <button id="no" class="invertida" onfocus="selected='no'; ">No hace falta!</button>
+        </div>
+    </div>
+</div>
+            
+
+
+
+
+        </main>
+
+        <main>
+            <section>
+                <video id="video" src="Prueba de admisión llamadas 2025.mp4" autoplay="true" loop="true"
+                    muted="true"></video>
+            </section>
+        </main>
+
+    </div>
+
+
+    <footer>
+        <p>&copy; 2024 Museo del Carnaval. Todos los derechos reservados.</p>
+    </footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="soundscript.js"></script>
+
+
+    <script>
+
+
+        
+
+              var selected = "";
+              var audioguia
+        // Mostrar el modal automáticamente al cargar la página
+   
+   
+        window.onload = function() {
+            document.getElementById("modal").style.visibility = "visible"; // Hace visible el modal
+        document.getElementById("modal").style.opacity = "1"; 
+    // Espera un momento para asegurar que el modal y el botón estén cargados y visibles
+    setTimeout(function() {
+        // Añade la transición para hacerlo visible
+        document.getElementById("si").focus(); // Asegura que el botón "si" reciba el foco
+    }, 600); // Espera 10ms antes de hacer visible el modal y darle foco al botón
+};
+
+    // Función para cambiar la visibilidad del modal
+    function changeVisibility() {
+        document.getElementById("modal").style.visibility = "hidden"; // Oculta el modal
+        document.getElementById("modal").style.opacity = "0"; // Hace invisible el modal con transición
+   
+    }
+
+   
+      
+      
+      
+      
+      
+      
+      
+      
+
+
+
+        // Detecta las teclas presionadas
+        document.addEventListener('keydown', (event) => {
+            PlaySound(archivosWav[8]);
+let modalopen=document.getElementById("modal").style.visibility=="visible";
+            console.log(event.key);
+            if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+              if(modalopen)
+              {
+                if(selected == "si")
+                {
+                    document.getElementById("no").focus(); // Asegura que el botón "si" reciba el foco
+                    PlaySound(archivosWav[0])
+                }   else
+                {
+
+                    document.getElementById("si").focus(); // Asegura que el botón "si" reciba el foco
+                    PlaySound(archivosWav[2])
+                }
+              }
+                   
+              
+            } else if (event.key === 'Enter') {
+                if(!modalopen){
+                   window.location.href=`MDC.html?audioguia=${audioguia}`
+                }else if (selected == "si") {
+                   audioguia = "si"
+                    document.getElementById("jugar").focus()
+                    changeVisibility()
+                }else if(selected == "no"){
+                     audioguia = "no"
+                    changeVisibility()
+                    document.getElementById("jugar").focus()
+                }
+            }
+
+
+
+
+
+       
+        });
+    </script>
+</body>
+
+</html>
