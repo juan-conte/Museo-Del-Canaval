@@ -1286,7 +1286,7 @@ const audioguia = urlParams.get("audioguia");
                 const correctHits = hitsArray.filter(numero => numero === 1).length;
                 if (correctHits >= 5) {
 
-                    if (theme == 0) { toggleTheme() }
+                    if (theme == 0) { toggleTheme(); PlaySound(archivosWav[4])}
                 } else {
                     if (theme == 1) { toggleTheme() }
                 }
