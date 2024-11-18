@@ -43,7 +43,8 @@ let habilitarSonido = confirm("¿Deseas habilitar el sonido?");
 // Añadir un event listener para la tecla Enter que se ejecute solo una vez
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
-      PlaySound(archivosWav[8])
+        SoundAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+        PlaySound(archivosWav[8])
     }
 }, { once: true });
 
