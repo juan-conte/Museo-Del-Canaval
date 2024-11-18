@@ -29,7 +29,7 @@ const archivosWav = [
     "slide4.wav"
 ];
 
-// Crear un objeto para almacenar los elementos de audio pre-cargados
+// Crear un objeto para almacenar los elementos de audio 
 const audios = {};
 
 // Pre-cargar todos los audios
