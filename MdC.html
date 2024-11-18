@@ -54,10 +54,9 @@
 
 
 
-#score .dark
-{
-    color: white;
-}
+        #score .dark {
+            color: white;
+        }
 
 
 
@@ -363,59 +362,70 @@
 
 
         .grid-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas, una para los elementos y otra para las explicaciones */
-    grid-template-rows: repeat(4, 1fr); /* Asegura que todas las filas tengan el mismo tamaño */
-    gap: 20px; /* Espacio entre columnas y filas */
-    padding: 20px;
-    height: 80vh;
-    width: 40vw;
-    align-items: stretch; /* Estira los elementos para que ocupen la misma altura en cada fila */
-    justify-items: center; /* Centra los elementos en cada celda de forma horizontal */
-    align-items: center; /* Centra los elementos en cada celda de forma vertical */
-}
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            /* Dos columnas, una para los elementos y otra para las explicaciones */
+            grid-template-rows: repeat(4, 1fr);
+            /* Asegura que todas las filas tengan el mismo tamaño */
+            gap: 20px;
+            /* Espacio entre columnas y filas */
+            padding: 20px;
+            height: 80vh;
+            width: 40vw;
+            align-items: stretch;
+            /* Estira los elementos para que ocupen la misma altura en cada fila */
+            justify-items: center;
+            /* Centra los elementos en cada celda de forma horizontal */
+            align-items: center;
+            /* Centra los elementos en cada celda de forma vertical */
+        }
 
-.elementos {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+        .elementos {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
-.item {
-    width: 100px;
-    height: 100px; /* Fija la altura de los elementos */
-    background-color: #3498db;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-    border-radius: 8px;
-    flex-shrink: 0; /* Evita que los elementos se encojan */
-}
+        .item {
+            width: 100px;
+            height: 100px;
+            /* Fija la altura de los elementos */
+            background-color: #3498db;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 8px;
+            flex-shrink: 0;
+            /* Evita que los elementos se encojan */
+        }
 
-.explicaciones {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly; /* Distribuir las explicaciones uniformemente */
-    gap: 10px;
-}
+        .explicaciones {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            /* Distribuir las explicaciones uniformemente */
+            gap: 10px;
+        }
 
-.explicaciones p {
-    background-color: #f2f2f2;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    text-align: justify;
-    height: 100px; /* Fija la altura de las explicaciones para que coincidan con los elementos */
-    overflow: auto; /* Permite que el texto se desplace si es demasiado largo */
-}
+        .explicaciones p {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            text-align: justify;
+            height: 100px;
+            /* Fija la altura de las explicaciones para que coincidan con los elementos */
+            overflow: auto;
+            /* Permite que el texto se desplace si es demasiado largo */
+        }
 
 
 
 
-        
-.esferaD {
+
+        .esferaD {
             width: 60px;
             height: 60px;
             background-color: black;
@@ -425,7 +435,7 @@
         }
 
         .diamanteD {
-         
+
             width: 40px;
             /* Ancho del rombo */
             height: 40px;
@@ -438,7 +448,7 @@
             /* Espaciado alrededor del rombo, ajustable */
         }
 
-        .snareD{
+        .snareD {
             width: 0;
             height: 0;
             border-left: 30px solid transparent;
@@ -447,8 +457,8 @@
         }
 
 
-        .ssnareD{
-         
+        .ssnareD {
+
 
             width: 0;
             height: 0;
@@ -672,7 +682,7 @@
             height: 85vh;
             justify-content: flex-start;
             align-items: center;
-            
+
         }
 
 
@@ -869,9 +879,10 @@
         <video id="video-card" src="" autoplay loop style="width: 50vw; "></video>
         <div id="video-card-content">
             <h3 id="video-titulo-card">YA ESTAMOS POR ARRANCAR!</h3>
-            <p id="video-texto-card" class="invertida" style="font-size: 1rem;">PRESIONA ARRIBA O ABAJO PARA SELECCIONAR EL RITMO!</p>
+            <p id="video-texto-card" class="invertida" style="font-size: 1rem;">PRESIONA ARRIBA O ABAJO PARA SELECCIONAR
+                EL RITMO!</p>
 
-         
+
         </div>
         <img id="tutorial-img" src="" alt="" style="width: 45vw; padding:2vw">
     </div>
@@ -888,7 +899,7 @@
                 <option value="BASE">BASE</option>
                 <option value="CLAVE">CLAVE</option>
                 <option value="RESONGO">RESONGO</option>
-                
+
             </select>
         </div>
 
@@ -1047,17 +1058,17 @@
 
 
 
-const urlParams = new URLSearchParams(window.location.search);
-const audioguia = urlParams.get("audioguia");
+        const urlParams = new URLSearchParams(window.location.search);
+        const audioguia = urlParams.get("audioguia");
 
 
 
         const patrones = {
 
-            BASE: ['D', 'X',  'T', 'D',"X",  'T', 'E', 'T', 'D',"X" ],
-            CLAVE: ['Q', 'Q', 'Q',"X", 'Q', 'Q', 'E', 'T'],
-            RESONGO: [ 'E', 'T', 'T','X','T', 'X',  'E', 'T', 'T', 'E', 'T', 'T', 'D'],
-        
+            BASE: ['D', 'X', 'T', 'D', "X", 'T', 'E', 'T', 'D', "X"],
+            CLAVE: ['Q', 'Q', 'Q', "X", 'Q', 'Q', 'E', 'T'],
+            RESONGO: ['E', 'T', 'T', 'X', 'T', 'X', 'E', 'T', 'T', 'E', 'T', 'T', 'D'],
+
         };
 
 
@@ -1131,7 +1142,7 @@ const audioguia = urlParams.get("audioguia");
                 case "1":
                     titulo.innerText = "BIENVENIDXS!";
                     texto.innerText = "Este es un juego para aprender a disfrutar del candombe de la musica desde el tacto, la vision y el ritmo!.";
-                    
+
                     break;
                 case "2":
                     titulo.innerText = "Estrella y Círculo";
@@ -1145,8 +1156,8 @@ const audioguia = urlParams.get("audioguia");
                     break;
 
                 case "4":
-                titulo.remove(); texto.remove(); imagen.remove();
-                container.innerHTML+=` <div>
+                    titulo.remove(); texto.remove(); imagen.remove();
+                    container.innerHTML += ` <div>
         <div class="grid-container">
             
                 <div class="snareD"></div>
@@ -1169,9 +1180,9 @@ const audioguia = urlParams.get("audioguia");
 
 
                 default:
-                
 
-                    container.innerHTML="";
+
+                    container.innerHTML = "";
 
                     card.style.width = "33vw";
                     card.style.left = "5vw";
@@ -1209,14 +1220,14 @@ const audioguia = urlParams.get("audioguia");
 
 
         function flashColor(element, color) {
-    const originalColor = element.style.color; // Guardar el color original
-    element.style.color = color; // Cambiar al color deseado
+            const originalColor = element.style.color; // Guardar el color original
+            element.style.color = color; // Cambiar al color deseado
 
-    // Después de 300 ms, volver al color original
-    setTimeout(() => {
-        element.style.color = originalColor;
-    }, 300);
-}
+            // Después de 300 ms, volver al color original
+            setTimeout(() => {
+                element.style.color = originalColor;
+            }, 300);
+        }
         function msToBpm(ms) {
             if (ms <= 0) {
                 throw new Error("El valor debe ser mayor que cero");
@@ -1257,7 +1268,7 @@ const audioguia = urlParams.get("audioguia");
                     explotar()
                     let scoretext = document.getElementById('score')
                     scoretext.innerText = `${score}`;
-                    flashColor(scoretext,"#df7f33");
+                    flashColor(scoretext, "#df7f33");
                     hitsArray.push(1);
 
                     if (hitsArray.length > 10) {
@@ -1286,12 +1297,16 @@ const audioguia = urlParams.get("audioguia");
                 const correctHits = hitsArray.filter(numero => numero === 1).length;
                 if (correctHits >= 5) {
 
-                    if (theme == 0) { toggleTheme(); PlaySound(archivosWav[4])}
+                    if (theme == 0) { toggleTheme(); PlaySound(archivosWav[4]) }
                 } else {
                     if (theme == 1) { toggleTheme() }
                 }
             }
         }
+
+
+        let audiosTrack = ["palo.wav", "mano.wav", "cha.wav", "paloma.wav"]
+
         function moverElemento(elemento) {
             let position = window.innerWidth;
             const targetPosition = window.innerWidth * 0.2; // Calcula el 20% de la ventana
@@ -1301,6 +1316,27 @@ const audioguia = urlParams.get("audioguia");
                     tupapa.removeChild(elemento); // Eliminar al llegar al borde
                 } else {
                     elemento.style.left = (position -= 10) + 'px';
+                }
+
+
+
+                if (position <= window.innerWidth * 0.4) {
+                    switch (true) {
+                        case elemento.classList.contains("snare"):
+                            PlaySound(audiosTrack[0]); // Reproduce "palo.wav"
+                            break;
+                        case elemento.classList.contains("esfera"):
+                            PlaySound(audiosTrack[1]); // Reproduce "mano.wav"
+                            break;
+                        case elemento.classList.contains("ssnare"):
+                            PlaySound(audiosTrack[2]); // Reproduce "cha.wav"
+                            break;
+                        case elemento.classList.contains("diamante"):
+                            PlaySound(audiosTrack[3]); // Reproduce "paloma.wav"
+                            break;
+                        default:
+                            console.log("Clase no reconocida.");
+                    }
                 }
 
                 // Inicia el desvanecimiento cuando llega a 30% de la pantalla
@@ -1326,63 +1362,63 @@ const audioguia = urlParams.get("audioguia");
         }
         let isRunning = true; // Variable de control
 
-function crearPatron() {
-    if (!isRunning) return; // Detener si isRunning es false
+        function crearPatron() {
+            if (!isRunning) return; // Detener si isRunning es false
 
-    // Obtener el patrón seleccionado
-    const patronSeleccionado = document.getElementById("patronSelect").value;
+            // Obtener el patrón seleccionado
+            const patronSeleccionado = document.getElementById("patronSelect").value;
 
-    // Si no hay un patrón seleccionado o el patrón no existe en el objeto `patrones`, detener la función
-    if (!patronSeleccionado || !patrones[patronSeleccionado]) return;
+            // Si no hay un patrón seleccionado o el patrón no existe en el objeto `patrones`, detener la función
+            if (!patronSeleccionado || !patrones[patronSeleccionado]) return;
 
-    const patron = patrones[patronSeleccionado]; // Obtener el patrón basado en la selección
-    let index = 0; // Control de índice para las notas
-    let repetitions = 0; // Control de repeticiones
+            const patron = patrones[patronSeleccionado]; // Obtener el patrón basado en la selección
+            let index = 0; // Control de índice para las notas
+            let repetitions = 0; // Control de repeticiones
 
-    function procesarNota() {
-        if (!isRunning) return; // Detener si isRunning es false
+            function procesarNota() {
+                if (!isRunning) return; // Detener si isRunning es false
 
-        // Si hemos procesado todas las notas, gestionar las repeticiones
-        if (index >= patron.length) {
-            repetitions++;
+                // Si hemos procesado todas las notas, gestionar las repeticiones
+                if (index >= patron.length) {
+                    repetitions++;
 
-            // Si se ha alcanzado el límite de repeticiones, detener el bucle
-            if (repetitions >= 3) {
-                repetitions = 0; // Reiniciar repeticiones
-                return; // Salir de la función
+                    // Si se ha alcanzado el límite de repeticiones, detener el bucle
+                    if (repetitions >= 3) {
+                        repetitions = 0; // Reiniciar repeticiones
+                        return; // Salir de la función
+                    }
+
+                    // Esperar antes de reiniciar el patrón
+                    setTimeout(() => {
+                        if (isRunning) crearPatron(); // Verificar isRunning antes de reiniciar
+                    }, 500);
+                    return; // Salir de la función
+                }
+
+                // Obtener el símbolo actual del patrón
+                const simbolo = patron[index++];
+
+                // Crear el elemento correspondiente según el símbolo
+                if (simbolo === 'E') crearElemento('esfera');
+                if (simbolo === 'T') crearElemento('snare');
+                if (simbolo === 'D') crearElemento('diamante');
+                if (simbolo === 'Q') crearElemento('ssnare');
+
+                if (simbolo === 'X') {
+                    // Hacer una pausa antes de continuar con el siguiente símbolo
+                    setTimeout(() => {
+                        procesarNota(); // Llamar a procesarNota después de la pausa
+                    }, ritmo / 5); // Aquí puedes modificar el tiempo que quieras que dure la pausa
+                    return; // No continuar el proceso, ya que estamos esperando
+                }
+
+                // Determinar el delay para el siguiente símbolo
+                const delay = ritmo / 3;
+                setTimeout(procesarNota, delay); // Llamar a procesarNota con el delay calculado
             }
 
-            // Esperar antes de reiniciar el patrón
-            setTimeout(() => {
-                if (isRunning) crearPatron(); // Verificar isRunning antes de reiniciar
-            }, 500);
-            return; // Salir de la función
+            procesarNota(); // Iniciar el procesamiento de notas
         }
-
-        // Obtener el símbolo actual del patrón
-        const simbolo = patron[index++];
-
-        // Crear el elemento correspondiente según el símbolo
-        if (simbolo === 'E') crearElemento('esfera');
-        if (simbolo === 'T') crearElemento('snare');
-        if (simbolo === 'D') crearElemento('diamante');
-        if (simbolo === 'Q') crearElemento('ssnare');
-        
-        if (simbolo === 'X') {
-            // Hacer una pausa antes de continuar con el siguiente símbolo
-            setTimeout(() => {
-                procesarNota(); // Llamar a procesarNota después de la pausa
-            }, ritmo/5); // Aquí puedes modificar el tiempo que quieras que dure la pausa
-            return; // No continuar el proceso, ya que estamos esperando
-        }
-
-        // Determinar el delay para el siguiente símbolo
-        const delay = ritmo / 3;
-        setTimeout(procesarNota, delay); // Llamar a procesarNota con el delay calculado
-    }
-
-    procesarNota(); // Iniciar el procesamiento de notas
-}
 
         // Función para detener el patrón
         function detenerPatron() {
@@ -1488,34 +1524,34 @@ function crearPatron() {
 
 
 
-let videos = 
-[
-        {
-            titulo: "Base",
-            texto: "DIFICULTAD: Media",
-            src: "Videos/BASE - Sample.mp4",
-             img: "Tutoriales/BASE.png"
-        },
+        let videos =
+            [
+                {
+                    titulo: "Base",
+                    texto: "DIFICULTAD: Media",
+                    src: "Videos/BASE - Sample.mp4",
+                    img: "Tutoriales/BASE.png"
+                },
 
-        {
-            titulo: "Clave",
-            texto: "DIFICULTAD: Fácil",
-            src: "Videos/Clave - Sample.mp4",
-            img: "Tutoriales/CLAVE.png"
-        },
+                {
+                    titulo: "Clave",
+                    texto: "DIFICULTAD: Fácil",
+                    src: "Videos/Clave - Sample.mp4",
+                    img: "Tutoriales/CLAVE.png"
+                },
 
-        {
-            titulo: "Resongo",
-            texto: "DIFICULTAD: Difícil",
-            src: "Videos/Resongo - Sample.mp4",
-            img: "Tutoriales/RESONGO.png"
-        },
-
-  
-      
+                {
+                    titulo: "Resongo",
+                    texto: "DIFICULTAD: Difícil",
+                    src: "Videos/Resongo - Sample.mp4",
+                    img: "Tutoriales/RESONGO.png"
+                },
 
 
-]
+
+
+
+            ]
 
 
 
@@ -1536,14 +1572,14 @@ let videos =
 
                 let video = document.querySelector("#video-card")
 
-               
+
                 let vCardTitle = document.querySelector("#video-titulo-card");
                 let vCardText = document.querySelector("#video-texto-card");
                 let vCardImg = document.querySelector("#tutorial-img");
                 vCardTitle.innerText = videos[currentTrack].titulo;
                 vCardText.innerText = videos[currentTrack].texto;
- video.src = videos[currentTrack].src;
- vCardImg.src = videos[currentTrack].img
+                video.src = videos[currentTrack].src;
+                vCardImg.src = videos[currentTrack].img
 
 
             }
@@ -1552,9 +1588,9 @@ let videos =
 
 
 
-        let slideAudios = [ "intro - Audioasistido.wav", "slide2.wav",
-    "slide3.wav",
-    "slide4.wav"]
+        let slideAudios = ["intro - Audioasistido.wav", "slide2.wav",
+            "slide3.wav",
+            "slide4.wav"]
         let cardEXISTS;
         var currentslide = 1;
         document.querySelector("#slide-1").checked = true;
@@ -1569,15 +1605,15 @@ let videos =
             if (event.key === 'Escape') {
 
 
-                setTimeout(()=>{document.getElementsByClassName("blur-overlay")[0].hidden = false;},300);
+                setTimeout(() => { document.getElementsByClassName("blur-overlay")[0].hidden = false; }, 300);
 
 
                 if (confirm("¿Quieres salir del juego?")) {
-                    
+
                     window.location.href = "index.html"
-                }else{
-            
-                  
+                } else {
+
+
                 }
             } else {
                 cardEXISTS = document.getElementsByClassName("card")[0] != null;
@@ -1599,8 +1635,8 @@ let videos =
                         if (currentslide < 5) {
                             currentslide++;
                             document.querySelector(`#slide-${currentslide}`).checked = true;
-                            PlaySound(slideAudios[currentslide-1])
-                            updateCard();   
+                            PlaySound(slideAudios[currentslide - 1])
+                            updateCard();
 
 
                         }
@@ -1624,9 +1660,9 @@ let videos =
                     if (currentslide == 5) {
                         cardVideo = document.getElementsByClassName("videoCard")[0].style.visibility = "visible";
 
-                        
-                        
-                        
+
+
+
 
 
                         if (event.key === 'ArrowRight') {
@@ -1679,9 +1715,9 @@ let videos =
 
 
                 if (event.key === 'ArrowUp') {
-                    
+
                     changeTrack("previous")
-                    archivosWav[12+currentTrack-1]
+                    archivosWav[12 + currentTrack - 1]
 
 
                 }
@@ -1690,7 +1726,7 @@ let videos =
                 if (event.key === 'ArrowDown') {
 
                     changeTrack("next")
-                    archivosWav[12+currentTrack-1]
+                    archivosWav[12 + currentTrack - 1]
 
 
                 }
