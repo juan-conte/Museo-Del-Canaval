@@ -48,10 +48,18 @@ let habilitarSonido = confirm("¿Deseas habilitar el sonido?");
 async function PlaySound(fileName) {
     if (!habilitarSonido) return; // Si el sonido está deshabilitado, no hacer nada
 
+
+    if (SoundAudioContext== null)
+    {
+        SoundAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
     // Si el contexto de audio está suspendido, reanudarlo
     if (SoundAudioContext.state === "suspended") {
         await SoundAudioContext.resume();
     }
+
+
 
     // Si hay un audio reproduciéndose, detenerlo
     if (currentAudio) {
@@ -83,7 +91,7 @@ async function PlaySound(fileName) {
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
         if(habilitarSonido)
-        SoundAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+       
         PlaySound(archivosWav[8])
     }
 }, { once: true });
