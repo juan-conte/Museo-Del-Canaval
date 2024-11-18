@@ -41,12 +41,6 @@ archivosWav.forEach(fileName => {
 
 let habilitarSonido = confirm("¿Deseas habilitar el sonido?");
 // Añadir un event listener para la tecla Enter que se ejecute solo una vez
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-        SoundAudioContext = new (window.AudioContext || window.webkitAudioContext)();
-        PlaySound(archivosWav[8])
-    }
-}, { once: true });
 
 // Reproducir el sonido inicial si el usuario habilita el sonido
 
@@ -86,6 +80,13 @@ async function PlaySound(fileName) {
             console.error(`Error al reproducir el sonido: ${error}`);
         });
 }
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        if(habilitarSonido)
+        SoundAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+        PlaySound(archivosWav[8])
+    }
+}, { once: true });
 
 // Ejemplo: Reproducir un sonido por su nombre
 // PlaySound("btnJugar.wav");
