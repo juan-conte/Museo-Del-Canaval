@@ -1,11 +1,11 @@
 // Crear un SoundAudioContext para desbloquear el audio
-const SoundAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+const SoundAudioContext = null;
+// Variable para habilitar o deshabilitar el sonido
 
 // Variable global para el audio actual
 let currentAudio = null;
 
-// Variable para habilitar o deshabilitar el sonido
-let habilitarSonido = confirm("¿Deseas habilitar el sonido?");
+
 
 // Lista de archivos de sonido
 const archivosWav = [
@@ -39,6 +39,11 @@ archivosWav.forEach(fileName => {
     audios[fileName] = audio;
 });
 
+let habilitarSonido = confirm("¿Deseas habilitar el sonido?");
+if (habilitarSonido) {
+    SoundAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+
 // Función para reproducir el sonido inicial
 function PlayInitialSound() {
     SoundAudioContext.resume().then(() => {
@@ -65,11 +70,9 @@ function PlayInitialSound() {
         console.error("Error al desbloquear el contexto de sonido:", error);
     });
 }
-
-// Reproducir el sonido inicial si el usuario habilita el sonido
-if (habilitarSonido) {
-    PlayInitialSound();
+PlayInitialSound();
 }
+// Reproducir el sonido inicial si el usuario habilita el sonido
 
 // Función para reproducir cualquier sonido
 async function PlaySound(fileName) {

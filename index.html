@@ -458,11 +458,12 @@ let modalopen=document.getElementById("modal").style.visibility=="visible";
                 if(!modalopen){
                    window.location.href=`MDC.html`
                 }else if (selected == "si") {
-                   audioguia = "si"
+                  localStorage.setItem("audioguia","si")
                     document.getElementById("jugar").focus()
+                    PlaySound(archivosWav[1])
                     changeVisibility()
                 }else if(selected == "no"){
-                     audioguia = "no"
+                    localStorage.setItem("audioguia","no")
                     changeVisibility()
                     document.getElementById("jugar").focus()
                 }
