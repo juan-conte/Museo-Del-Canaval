@@ -397,7 +397,16 @@
     <script>
 
 
-        
+document.addEventListener('click', function(event) {
+    
+    if(habilitarSonido)
+    {
+        PlaySound(archivosWav[8])
+    }
+   
+
+
+}, { once: true });
 
               var selected = "";
               var audioguia

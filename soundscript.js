@@ -40,16 +40,7 @@ archivosWav.forEach(fileName => {
 });
 
 let habilitarSonido = confirm("¿Deseas habilitar el sonido?");
-document.addEventListener('click', function(event) {
-    
-    if(habilitarSonido)
-    {
-        PlaySound(archivosWav[8])
-    }
-   
 
-
-}, { once: true });
 // Añadir un event listener para la tecla Enter que se ejecute solo una vez
 
 // Reproducir el sonido inicial si el usuario habilita el sonido
