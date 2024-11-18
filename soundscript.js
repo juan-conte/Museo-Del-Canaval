@@ -1,5 +1,5 @@
 // Crear un SoundAudioContext para desbloquear el audio
-const SoundAudioContext = null;
+let SoundAudioContext = null;
 // Variable para habilitar o deshabilitar el sonido
 
 // Variable global para el audio actual
@@ -13,7 +13,7 @@ const archivosWav = [
     "btnJugar.wav",
     "btnNohacefalta.wav",
     "cha.wav",
-    "estaseritmo.wav",
+    "estasenritmo.wav",
     "indicacionFlecha.wav",
     "instruccion - bienvenida.wav",
     "instruccion - simbolos.wav",
