@@ -1131,7 +1131,7 @@ const audioguia = urlParams.get("audioguia");
                 case "1":
                     titulo.innerText = "BIENVENIDXS!";
                     texto.innerText = "Este es un juego para aprender a disfrutar del candombe de la musica desde el tacto, la vision y el ritmo!.";
-
+                    
                     break;
                 case "2":
                     titulo.innerText = "Estrella y Círculo";
@@ -1552,7 +1552,9 @@ let videos =
 
 
 
-
+        let slideAudios = [ "intro - Audioasistido.wav", "slide2.wav",
+    "slide3.wav",
+    "slide4.wav"]
         let cardEXISTS;
         var currentslide = 1;
         document.querySelector("#slide-1").checked = true;
@@ -1597,7 +1599,8 @@ let videos =
                         if (currentslide < 5) {
                             currentslide++;
                             document.querySelector(`#slide-${currentslide}`).checked = true;
-                            updateCard();
+                            PlaySound(slideAudios[currentslide-1])
+                            updateCard();   
 
 
                         }
@@ -1607,7 +1610,7 @@ let videos =
 
                     if (event.key === 'ArrowLeft') {
                         if (1 < currentslide && currentslide < 5) {
-                            currentslide++;
+                            currentslide--;
                             document.querySelector(`#slide-${currentslide}`).checked = true;
                             updateCard();
 
@@ -1676,8 +1679,9 @@ let videos =
 
 
                 if (event.key === 'ArrowUp') {
-
+                    
                     changeTrack("previous")
+                    archivosWav[12+currentTrack-1]
 
 
                 }
@@ -1686,6 +1690,7 @@ let videos =
                 if (event.key === 'ArrowDown') {
 
                     changeTrack("next")
+                    archivosWav[12+currentTrack-1]
 
 
                 }
