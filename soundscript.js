@@ -42,35 +42,8 @@ archivosWav.forEach(fileName => {
 let habilitarSonido = confirm("¿Deseas habilitar el sonido?");
 if (habilitarSonido) {
     SoundAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+    PlaySound(archivosWav[8])
 
-
-// Función para reproducir el sonido inicial
-function PlayInitialSound() {
-    SoundAudioContext.resume().then(() => {
-        console.log("Contexto de sonido desbloqueado");
-
-        currentAudio = audios[archivosWav[7]]; // Seleccionar el sonido inicial
-        if (!currentAudio) {
-            console.error("El archivo de sonido inicial no existe.");
-            return;
-        }
-
-        const track = SoundAudioContext.createMediaElementSource(currentAudio);
-        track.connect(SoundAudioContext.destination);
-
-        currentAudio.currentTime = 0; // Reiniciar al inicio
-        currentAudio.play()
-            .then(() => {
-                console.log(`Reproduciendo: ${archivosWav[7]}`);
-            })
-            .catch(error => {
-                console.error(`Error al reproducir sonido inicial: ${error}`);
-            });
-    }).catch(error => {
-        console.error("Error al desbloquear el contexto de sonido:", error);
-    });
-}
-PlayInitialSound();
 }
 // Reproducir el sonido inicial si el usuario habilita el sonido
 
