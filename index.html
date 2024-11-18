@@ -444,19 +444,19 @@ let modalopen=document.getElementById("modal").style.visibility=="visible";
                 if(selected == "si")
                 {
                     document.getElementById("no").focus(); // Asegura que el botón "si" reciba el foco
-                    PlaySound(archivosWav[0])
+                    PlaySound(archivosWav[2])
                 }   else
                 {
 
                     document.getElementById("si").focus(); // Asegura que el botón "si" reciba el foco
-                    PlaySound(archivosWav[2])
+                    PlaySound(archivosWav[0])
                 }
               }
                    
               
             } else if (event.key === 'Enter') {
                 if(!modalopen){
-                   window.location.href=`MDC.html?audioguia=${audioguia}`
+                   window.location.href=`MDC.html`
                 }else if (selected == "si") {
                    audioguia = "si"
                     document.getElementById("jugar").focus()
