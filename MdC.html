@@ -1320,24 +1320,7 @@
 
 
 
-                if (position <= window.innerWidth * 0.4) {
-                    switch (true) {
-                        case elemento.classList.contains("snare"):
-                            PlaySound(audiosTrack[0]); // Reproduce "palo.wav"
-                            break;
-                        case elemento.classList.contains("esfera"):
-                            PlaySound(audiosTrack[1]); // Reproduce "mano.wav"
-                            break;
-                        case elemento.classList.contains("ssnare"):
-                            PlaySound(audiosTrack[2]); // Reproduce "cha.wav"
-                            break;
-                        case elemento.classList.contains("diamante"):
-                            PlaySound(audiosTrack[3]); // Reproduce "paloma.wav"
-                            break;
-                        default:
-                            console.log("Clase no reconocida.");
-                    }
-                }
+               
 
                 // Inicia el desvanecimiento cuando llega a 30% de la pantalla
                 if (position <= targetPosition && elemento.style.opacity !== "0" && document.body.contains(elemento)) {
