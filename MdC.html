@@ -1391,13 +1391,13 @@
                     // Hacer una pausa antes de continuar con el siguiente símbolo
                     setTimeout(() => {
                         procesarNota(); // Llamar a procesarNota después de la pausa
-                    }, ritmo / 5); // Aquí puedes modificar el tiempo que quieras que dure la pausa
+                    }, ritmo / 10); // Aquí puedes modificar el tiempo que quieras que dure la pausa
                     return; // No continuar el proceso, ya que estamos esperando
                 }
 
                 // Determinar el delay para el siguiente símbolo
-                const delay = ritmo / 3;
-                setTimeout(procesarNota, delay); // Llamar a procesarNota con el delay calculado
+                procesarNota()
+             
             }
 
             procesarNota(); // Iniciar el procesamiento de notas
