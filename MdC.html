@@ -1543,18 +1543,20 @@
         function changeTrack(direction) {
 
 
-            const patronesLength = Object.values(patrones).length;
 
-            if (direction === 'next') {
-                currentTrack = (currentTrack + 1) % patronesLength;
-            } else if (direction === 'previous') {
-                currentTrack = (currentTrack - 1 + patronesLength) % patronesLength;
-            } else {
-                console.error("Invalid direction:", direction);
-            }
+            const patronesLength = Object.values(patrones).length;
+console.log("Before:", currentTrack, "Direction:", direction, "Length:", patronesLength);
+
+if (direction === 'next') {
+    currentTrack = (currentTrack + 1) % patronesLength;
+} else if (direction === 'previous') {
+    currentTrack = (currentTrack - 1 + patronesLength) % patronesLength;
+}
+
+
 
             // Cambia el foco al botón de la pista actual
-            if (cardEXISTS) {
+            if (!isRunning) {
                 document.querySelectorAll('#player button')[currentTrack].focus();
 
                 let video = document.querySelector("#video-card")
@@ -1570,6 +1572,7 @@
 
 
             }
+            console.log("After:", currentTrack);
             document.querySelector(`#patronSelect option:nth-child(${currentTrack + 1})`).selected = true;
         }
 
@@ -1578,7 +1581,7 @@
         let slideAudios = ["intro - Audioasistido.wav", "slide2.wav",
             "slide3.wav",
             "slide4.wav"]
-        let cardEXISTS=true;
+
         var currentslide = 1;
         document.querySelector("#slide-1").checked = true;
 
