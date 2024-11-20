@@ -167,24 +167,31 @@
             font-family: PPAgrandir-GrandHeavy;
         }
 
-
-
         button {
             padding: 1rem;
-            font-size: 5rem;
+            font-size: 1rem;
             cursor: pointer;
             background-color: #333;
             color: #fff;
             border: none;
             outline: none;
             border-radius: 5px;
+            /* Bordes redondeados */
+            outline: none;
+            /* Quitar borde azul de enfoque */
+            appearance: none;
+            /* Elimina el estilo predeterminado */
+            text-align: center;
+            box-shadow: #000000 5px 5px;
         }
 
         button:focus {
             background-color: #DF7F33;
             color: black;
-            outline: 2px solid #fff;
+            outline: 2px solid #000000;
+            font-size: 2rem;
         }
+        
 
 
         .row-teclas {
