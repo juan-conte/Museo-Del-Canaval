@@ -1360,7 +1360,7 @@
 
             function procesarNota() {
                 if (!isRunning) return; // Detener si isRunning es false
-
+                const delay = ritmo / 6;
                 // Si hemos procesado todas las notas, gestionar las repeticiones
                 if (index >= patron.length) {
                     repetitions++;
@@ -1391,12 +1391,12 @@
                     // Hacer una pausa antes de continuar con el siguiente símbolo
                     setTimeout(() => {
                         procesarNota(); // Llamar a procesarNota después de la pausa
-                    }, ritmo / 10); // Aquí puedes modificar el tiempo que quieras que dure la pausa
+                    }, ritmo / delay); // Aquí puedes modificar el tiempo que quieras que dure la pausa
                     return; // No continuar el proceso, ya que estamos esperando
                 }
 
                 // Determinar el delay para el siguiente símbolo
-                const delay = ritmo / 6;
+             
                 setTimeout(procesarNota, delay); // Llamar a procesarNota con el delay calculado
             }
 
