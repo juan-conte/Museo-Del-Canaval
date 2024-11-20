@@ -1546,7 +1546,7 @@
             if (direction === 'next') {
                 currentTrack = (currentTrack + 1) % Object.values(patrones).length;
             } else if (direction === 'previous') {
-                currentTrack = (currentTrack - 1 + Object.values(patrones).length) % Object.values(patrones).length;
+                currentTrack = (currentTrack - 1) % Object.values(patrones).length;
             }
 
             // Cambia el foco al botón de la pista actual
