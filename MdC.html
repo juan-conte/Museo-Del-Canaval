@@ -1374,7 +1374,7 @@
                     // Esperar antes de reiniciar el patrón
                     setTimeout(() => {
                         if (isRunning) crearPatron(); // Verificar isRunning antes de reiniciar
-                    }, 10);
+                    }, delay);
                     return; // Salir de la función
                 }
 
@@ -1396,8 +1396,7 @@
                 }
 
                 // Determinar el delay para el siguiente símbolo
-                procesarNota()
-             
+                setTimeout(procesarNota, delay); // Llamar a procesarNota con el delay calculado
             }
 
             procesarNota(); // Iniciar el procesamiento de notas
