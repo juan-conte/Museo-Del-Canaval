@@ -1399,7 +1399,7 @@
                     // Hacer una pausa antes de continuar con el siguiente símbolo
                     setTimeout(() => {
                         procesarNota(); // Llamar a procesarNota después de la pausa
-                    }, ritmo / delay); // Aquí puedes modificar el tiempo que quieras que dure la pausa
+                    }, delay); // Aquí puedes modificar el tiempo que quieras que dure la pausa
                     return; // No continuar el proceso, ya que estamos esperando
                 }
 
@@ -1642,11 +1642,11 @@ if (direction === 'next') {
                         }
 
                         if (event.key === 'ArrowUp') {
-                            changeTrack("next");
+                            changeTrack("previous");
                         }
 
                         if (event.key === 'ArrowDown') {
-                            changeTrack("previous");
+                            changeTrack("next");
                         }
 
                         if (event.key === 'Enter') {
