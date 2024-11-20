@@ -1320,7 +1320,7 @@
 
 
 
-               
+
 
                 // Inicia el desvanecimiento cuando llega a 30% de la pantalla
                 if (position <= targetPosition && elemento.style.opacity !== "0" && document.body.contains(elemento)) {
@@ -1396,7 +1396,7 @@
                 }
 
                 // Determinar el delay para el siguiente símbolo
-             
+
                 setTimeout(procesarNota, delay); // Llamar a procesarNota con el delay calculado
             }
 
@@ -1543,10 +1543,14 @@
         function changeTrack(direction) {
 
 
+            const patronesLength = Object.values(patrones).length;
+
             if (direction === 'next') {
-                currentTrack = (currentTrack + 1) % Object.values(patrones).length;
+                currentTrack = (currentTrack + 1) % patronesLength;
             } else if (direction === 'previous') {
-                currentTrack = (currentTrack - 1) % Object.values(patrones).length;
+                currentTrack = (currentTrack - 1 + patronesLength) % patronesLength;
+            } else {
+                console.error("Invalid direction:", direction);
             }
 
             // Cambia el foco al botón de la pista actual
@@ -1574,55 +1578,75 @@
         let slideAudios = ["intro - Audioasistido.wav", "slide2.wav",
             "slide3.wav",
             "slide4.wav"]
-        let cardEXISTS;
+        let cardEXISTS=true;
         var currentslide = 1;
         document.querySelector("#slide-1").checked = true;
 
         document.addEventListener('keydown', (event) => {
-    if (!isRunning) {
-        // Bloque para gestionar las slides y su interacción
-        if (event.key === 'Escape') {
-            setTimeout(() => {
-                document.getElementsByClassName("blur-overlay")[0].hidden = false;
-            }, 300);
+            if (!isRunning) {
+                // Bloque para gestionar las slides y su interacción
+                if (event.key === 'Escape') {
+                    setTimeout(() => {
+                        document.getElementsByClassName("blur-overlay")[0].hidden = false;
+                    }, 300);
 
-            if (confirm("¿Quieres salir del juego?")) {
-                window.location.href = "index.html";
-            }
-            return; // Finaliza si se presionó Escape
-        }
-
-        const cardExists = document.getElementsByClassName("card")[0] != null;
-
-        if (cardExists) {
-            // Navegación entre slides
-            if (event.key === 'ArrowRight' && currentslide < 5) {
-                currentslide++;
-                document.querySelector(`#slide-${currentslide}`).checked = true;
-                PlaySound(slideAudios[currentslide - 1]);
-                updateCard();
-            }
-
-            if (event.key === 'ArrowLeft' && currentslide > 1) {
-                currentslide--;
-                document.querySelector(`#slide-${currentslide}`).checked = true;
-                updateCard();
-            }
-
-            // Última slide: controles específicos
-            if (currentslide === 5) {
-                document.getElementsByClassName("videoCard")[0].style.visibility = "visible";
-
-                if (event.key === 'ArrowRight') {
-                    ritmo -= 10;
-                    document.getElementById("bpmDisplay-card").innerText = msToBpm(ritmo);
+                    if (confirm("¿Quieres salir del juego?")) {
+                        window.location.href = "index.html";
+                    }
+                    return; // Finaliza si se presionó Escape
                 }
 
-                if (event.key === 'ArrowLeft') {
-                    ritmo += 10;
-                    document.getElementById("bpmDisplay-card").innerText = msToBpm(ritmo);
+               
+
+                if (currentslide < 5) {
+                    // Navegación entre slides
+                    if (event.key === 'ArrowRight' && ) {
+                        currentslide++;
+                        document.querySelector(`#slide-${currentslide}`).checked = true;
+                        PlaySound(slideAudios[currentslide - 1]);
+                        updateCard();
+                    }
+
+                    if (event.key === 'ArrowLeft' && currentslide > 1) {
+                        currentslide--;
+                        document.querySelector(`#slide-${currentslide}`).checked = true;
+                        updateCard();
+                    }
+
+                  
                 }
 
+  // Última slide: controles específicos
+  if (currentslide === 5) {
+                        document.getElementsByClassName("videoCard")[0].style.visibility = "visible";
+
+                        if (event.key === 'ArrowRight') {
+                            ritmo -= 10;
+                            document.getElementById("bpmDisplay-card").innerText = msToBpm(ritmo);
+                        }
+
+                        if (event.key === 'ArrowLeft') {
+                            ritmo += 10;
+                            document.getElementById("bpmDisplay-card").innerText = msToBpm(ritmo);
+                        }
+
+                        if (event.key === 'ArrowUp') {
+                            changeTrack("next");
+                        }
+
+                        if (event.key === 'ArrowDown') {
+                            changeTrack("previous");
+                        }
+
+                        if (event.key === 'Enter') {
+                            Start();
+                            isRunning = true; // El juego comienza
+                        }
+                    }
+
+
+            } else {
+                // Controles del juego activo
                 if (event.key === 'ArrowUp') {
                     changeTrack("next");
                 }
@@ -1631,33 +1655,17 @@
                     changeTrack("previous");
                 }
 
-                if (event.key === 'Enter') {
-                    Start();
-                    isRunning = true; // El juego comienza
+                if (event.key === 'ArrowRight') {
+                    ritmo -= 10;
+                    document.getElementById("bpmDisplay").innerText = msToBpm(ritmo);
+                }
+
+                if (event.key === 'ArrowLeft') {
+                    ritmo += 10;
+                    document.getElementById("bpmDisplay").innerText = msToBpm(ritmo);
                 }
             }
-        }
-    } else {
-        // Controles del juego activo
-        if (event.key === 'ArrowUp') {
-            changeTrack("next");
-        }
-
-        if (event.key === 'ArrowDown') {
-            changeTrack("previous");
-        }
-
-        if (event.key === 'ArrowRight') {
-            ritmo -= 10;
-            document.getElementById("bpmDisplay").innerText = msToBpm(ritmo);
-        }
-
-        if (event.key === 'ArrowLeft') {
-            ritmo += 10;
-            document.getElementById("bpmDisplay").innerText = msToBpm(ritmo);
-        }
-    }
-});
+        });
     </script>
 </body>
 
