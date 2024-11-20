@@ -1343,7 +1343,7 @@
                 }
             }, 20);
         }
-        let isRunning = true; // Variable de control
+        let isRunning = false; // Variable de control
 
         function crearPatron() {
             if (!isRunning) return; // Detener si isRunning es false
@@ -1493,7 +1493,7 @@
             setTimeout(() => { }, 1000);
 
 
-
+            isRunning = true;
             crearPatron();
 
         }
@@ -1579,160 +1579,85 @@
         document.querySelector("#slide-1").checked = true;
 
         document.addEventListener('keydown', (event) => {
-            let id = "#slide"
-            console.log(event.key)
-
-
-
-
-            if (event.key === 'Escape') {
-
-
-                setTimeout(() => { document.getElementsByClassName("blur-overlay")[0].hidden = false; }, 300);
-
-
-                if (confirm("¿Quieres salir del juego?")) {
-
-                    window.location.href = "index.html"
-                } else {
-
-
-                }
-            } else {
-                cardEXISTS = document.getElementsByClassName("card")[0] != null;
-
-
-
-
-
-                if (cardEXISTS) {
-
-
-
-
-
-
-
-
-                    if (event.key === 'ArrowRight') {
-                        if (currentslide < 5) {
-                            currentslide++;
-                            document.querySelector(`#slide-${currentslide}`).checked = true;
-                            PlaySound(slideAudios[currentslide - 1])
-                            updateCard();
-
-
-                        }
-
-                    }
-
-
-                    if (event.key === 'ArrowLeft') {
-                        if (1 < currentslide && currentslide < 5) {
-                            currentslide--;
-                            document.querySelector(`#slide-${currentslide}`).checked = true;
-                            updateCard();
-
-
-
-
-                        }
-
-                    }
-
-                    if (currentslide == 5) {
-                        cardVideo = document.getElementsByClassName("videoCard")[0].style.visibility = "visible";
-                        changeTrack("previous")
-
-
-
-
-
-                        if (event.key === 'ArrowRight') {
-
-
-                            ritmo -= 10;
-                            document.getElementById("bpmDisplay-card").innerText = msToBpm(ritmo);
-
-                        }
-
-                        if (event.key === 'ArrowLeft') {
-
-                            ritmo += 10;
-                            document.getElementById("bpmDisplay-card").innerText = msToBpm(ritmo);
-
-                        }
-
-                        if (event.key === 'Enter') {
-                            Start();
-
-
-                        }
-
-                    }
-
-
-
-
-
-
-
-
-
-
-
-                } else {
-
-
-
-
-
-
-
-
-
-
-
-                }
-
-
-
-                if (event.key === 'ArrowDown') {
-
-                    changeTrack("previous");
-                    archivosWav[12 + currentTrack - 1]
-
-
-                }
-
-
-                if (event.key === 'ArrowUp') {
-
-                    changeTrack("next");
-                    archivosWav[12 + currentTrack - 1]
-
-
-                }
+    if (!isRunning) {
+        // Bloque para gestionar las slides y su interacción
+        if (event.key === 'Escape') {
+            setTimeout(() => {
+                document.getElementsByClassName("blur-overlay")[0].hidden = false;
+            }, 300);
+
+            if (confirm("¿Quieres salir del juego?")) {
+                window.location.href = "index.html";
+            }
+            return; // Finaliza si se presionó Escape
+        }
+
+        const cardExists = document.getElementsByClassName("card")[0] != null;
+
+        if (cardExists) {
+            // Navegación entre slides
+            if (event.key === 'ArrowRight' && currentslide < 5) {
+                currentslide++;
+                document.querySelector(`#slide-${currentslide}`).checked = true;
+                PlaySound(slideAudios[currentslide - 1]);
+                updateCard();
+            }
+
+            if (event.key === 'ArrowLeft' && currentslide > 1) {
+                currentslide--;
+                document.querySelector(`#slide-${currentslide}`).checked = true;
+                updateCard();
+            }
+
+            // Última slide: controles específicos
+            if (currentslide === 5) {
+                document.getElementsByClassName("videoCard")[0].style.visibility = "visible";
 
                 if (event.key === 'ArrowRight') {
-
-
                     ritmo -= 10;
-                    document.getElementById("bpmDisplay").innerText = msToBpm(ritmo);
-
+                    document.getElementById("bpmDisplay-card").innerText = msToBpm(ritmo);
                 }
 
                 if (event.key === 'ArrowLeft') {
-
                     ritmo += 10;
-                    document.getElementById("bpmDisplay").innerText = msToBpm(ritmo);
-
+                    document.getElementById("bpmDisplay-card").innerText = msToBpm(ritmo);
                 }
 
+                if (event.key === 'ArrowUp') {
+                    changeTrack("next");
+                }
 
+                if (event.key === 'ArrowDown') {
+                    changeTrack("previous");
+                }
 
+                if (event.key === 'Enter') {
+                    Start();
+                    isRunning = true; // El juego comienza
+                }
             }
-        });
+        }
+    } else {
+        // Controles del juego activo
+        if (event.key === 'ArrowUp') {
+            changeTrack("next");
+        }
+
+        if (event.key === 'ArrowDown') {
+            changeTrack("previous");
+        }
+
+        if (event.key === 'ArrowRight') {
+            ritmo -= 10;
+            document.getElementById("bpmDisplay").innerText = msToBpm(ritmo);
+        }
+
+        if (event.key === 'ArrowLeft') {
+            ritmo += 10;
+            document.getElementById("bpmDisplay").innerText = msToBpm(ritmo);
+        }
+    }
+});
     </script>
 </body>
 
